@@ -2,12 +2,36 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import UserProfile
 import re
 
 # Create your views here.
 
+
+def role_required(role):
+    def decorator(view_func):
+        def _wrapped_view(request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                return HttpResponseForbidden("You are not authenticated.")
+
+            # Get the user's profile
+            user_profile = get_object_or_404(UserProfile, user=request.user)
+
+            # Check if the user's role matches the required role
+            if user_profile.role == role:
+                return view_func(request, *args, **kwargs)
+
+            return HttpResponseForbidden(f"Access Denied: You do not have permission to view this page. This section is restricted to {role} only")
+        return _wrapped_view
+    return decorator
+
+
+
+
+@role_required('Admin')
 def home(request):
     return HttpResponse("Hello, " + request.user.username)
 
@@ -61,7 +85,7 @@ def signup(request):
 
                     user_model = User.objects.get(username=username)
 
-                    new_profile = Profile.objects.create(user=user_model,email=email, role=role, phone = phone)
+                    new_profile = UserProfile.objects.create(user=user_model,email=email, role=role, phone = phone)
                     new_profile.save()
 
                     return redirect('/')
