@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Theatre</title>
+    <link rel="stylesheet" href="{% static 'css/theatre-style.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+
+    <h4>View Theatre</h4>
+    <p><strong>Name:</strong> {{ theatre.name }}</p>
+    <p><strong>Location:</strong> {{ theatre.location }}</p>
+    <a href="{% url 'update_theatre' theatre.id %}" class="btn">Edit</a>
+    <form action="{% url 'delete_theatre' theatre.id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn">Delete</button>
+    </form>
+    <a href="{% url 'dashboard' %}" class="btn">Back to Dashboard</a>
+</body>
+</html>

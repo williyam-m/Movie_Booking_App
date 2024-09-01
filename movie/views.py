@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Movie, Bookmark, Like, History
+from .models import *
 from django.core.paginator import Paginator
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -18,7 +18,7 @@ def dashboard(request):
 
     movie_list = Movie.objects.filter(user = user.username)
 
-    return render(request, 'dashboard.html',
+    return render(request, 'theatre-dashboard.html',
                   {'movie_list': movie_list})
 
 @login_required(login_url = 'signin')
