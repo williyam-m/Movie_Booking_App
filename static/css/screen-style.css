@@ -1,0 +1,116 @@
+/* General Container Styling */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for contrast */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Heading Styles */
+h4 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Form Label and Input Styling */
+form label {
+    font-size: 16px;
+    color: white;
+}
+
+form input, form select, form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444; /* Darker background for form elements */
+    color: white;
+    font-size: 16px;
+}
+
+form input[type="text"], form input[type="number"], form input[type="decimal"], form select {
+    width: 100%;
+}
+
+form button {
+    background-color: #ff0000; /* Red color for all buttons */
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #cc0000; /* Darker red for hover effect */
+}
+
+/* Table Styling for Dashboard */
+.table-container {
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #444;
+    text-align: left;
+}
+
+table th {
+    background-color: #555;
+}
+
+/* Seat Row Styling for Edit Screen */
+.seat-row-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
+    gap: 10px;
+}
+
+.seat {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seat.available {
+    background-color: white;
+}
+
+/* Buttons and Links */
+.btn-info, .btn-warning, .btn-danger, .btn-primary {
+    padding: 10px 20px;
+    background-color: #ff0000; /* Red color for all buttons */
+    border: none;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-info:hover, .btn-warning:hover, .btn-danger:hover, .btn-primary:hover {
+    background-color: #cc0000; /* Darker red for hover effect */
+}
+
+.back-to-dashboard {
+    text-align: center;
+    margin-top: 20px;
+}

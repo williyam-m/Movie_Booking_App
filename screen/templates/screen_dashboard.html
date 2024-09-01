@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/screen-style.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <div class="container">
+        <h4>Screen Dashboard</h4>
+
+        <div class="add-screen">
+            <a href="{% url 'create_screen' %}" class="btn btn-primary">Create New Screen</a>
+        </div>
+
+        <div class="screen-list">
+            {% if screen_list %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Screen Name</th>
+                            <th>Theatre</th>
+                            <th>Ticket Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for screen in screen_list %}
+                        <tr>
+                            <td>{{ screen.name }}</td>
+                            <td>{{ screen.theatre_id.name }}</td> <!-- Assuming 'name' is a field in Theatre model -->
+                            <td>{{ screen.ticket_price }}</td>
+                            <td>
+                                <a href="{% url 'view_screen' screen.id %}" class="btn btn-info">View</a>
+                                <a href="{% url 'update_screen' screen.id %}" class="btn btn-warning">Edit</a>
+                                <a href="{% url 'delete_screen' screen.id %}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No screens available. Please create a new one.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

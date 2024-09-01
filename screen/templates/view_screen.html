@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Screen</title>
+    <link rel="stylesheet" href="{% static 'css/screen-style.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <div class="container">
+        <h4>Screen: {{ screen.name }}</h4>
+
+        {% for row_label in row_labels %}
+            <div class="seat-row">
+                <span class="row-label">Row - {{ row_label }} - Column: 1 - {{ screen.columns }}</span>
+                <div class="seat-row-grid">
+                    {% for column in columns_range %}
+                        <div class="seat available"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Screen</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/screen-style.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <h4>Create Screen</h4>
+    <form method="post" action="{% url 'create_screen' %}">
+        {% csrf_token %}
+        <div>
+            <label for="id_theatre_id">Theatre:</label>
+            <select id="id_theatre_id" name="theatre_id" required>
+                <option value="" disabled selected>Select Theatre</option>
+                {% for theatre in theatres %}
+                    <option value="{{ theatre.id }}">{{ theatre.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="id_name">Name:</label>
+            <input type="text" id="id_name" name="name" required>
+        </div>
+        <div>
+            <label for="id_ticket_price">Ticket Price:</label>
+            <input type="text" id="id_ticket_price" name="ticket_price" required>
+        </div>
+        <div>
+            <label for="id_rows">Rows:</label>
+            <input type="number" id="id_rows" name="rows" required>
+        </div>
+        <div>
+            <label for="id_columns">Columns:</label>
+            <input type="number" id="id_columns" name="columns" required>
+        </div>
+        <button type="submit" class="btn">Save</button>
+    </form>
+    <a href="{% url 'screen_dashboard' %}" class="btn">Back to Dashboard</a>
+</body>
+</html>
