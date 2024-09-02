@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/showtime-style.css' %}">
+    <title>Edit Showtime</title>
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+
+    <div class="container">
+        <h4>Edit Showtime</h4>
+        <form method="post">
+            {% csrf_token %}
+            <label for="movie">Movie:</label>
+            <select id="movie" name="movie" required>
+                {% for movie in movies %}
+                    <option value="{{ movie.id }}" {% if movie.id == showtime.movie.id %}selected{% endif %}>{{ movie.title }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="screen">Screen:</label>
+            <select id="screen" name="screen" required>
+                {% for screen in screens %}
+                    <option value="{{ screen.id }}" {% if screen.id == showtime.screen.id %}selected{% endif %}>{{ screen.name }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="start_date">Start Date:</label>
+            <input type="datetime-local" id="start_date" name="start_date" value="{{ showtime.start_date|date:'Y-m-dTH:i' }}" required>
+            <br>
+            <button type="submit">Update Showtime</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+/* General Container Styling */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly darker background for better contrast */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* Heading Styles */
+h4 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Form Label and Input Styling */
+form label {
+    font-size: 16px;
+    color: white;
+}
+
+form input, form select, form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333; /* Darker background for form elements */
+    color: white;
+    font-size: 16px;
+}
+
+form input[type="text"], form input[type="datetime-local"], form select {
+    width: 100%;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff0000; /* Red background for buttons */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #cc0000; /* Darker red for button hover effect */
+}
+
+/* Table Styling for Showtime List */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #444;
+    text-align: left;
+}
+
+table th {
+    background-color: #555;
+}
+
+table tr:nth-child(even) {
+    background-color: #333;
+}
+
+table tr:hover {
+    background-color: #444; /* Slightly lighter background for row hover effect */
+}
+
+/* Action Links */
+a {
+    color: #ff0000; /* Red color for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Confirmation Message Styles */
+p {
+    font-size: 16px;
+}
