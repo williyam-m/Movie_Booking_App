@@ -18,7 +18,7 @@ def dashboard(request):
 
     movie_list = Movie.objects.filter(user = user.username)
 
-    return render(request, 'theatre-dashboard.html',
+    return render(request, 'dashboard.html',
                   {'movie_list': movie_list})
 
 @login_required(login_url = 'signin')
@@ -194,6 +194,7 @@ def addMovie(request):
         title = request.POST['title']
         overview = request.POST['overview']
         genre = request.POST['genre']
+        duration = request.POST['duration']
 
         if request.FILES.get('movie_image') != None:
             movie_image = request.FILES.get('movie_image')
@@ -208,7 +209,7 @@ def addMovie(request):
             return redirect('/movie/addwork')
 
         else:
-            new_movie = Movie.objects.create(user=user, overview=overview, genre=genre, title=title)
+            new_movie = Movie.objects.create(user=user, overview=overview, genre=genre, title=title, duration = duration)
             if movie_image_flag:
                 new_movie.movie_image = movie_image
 
@@ -251,6 +252,7 @@ def editMovie(request, movieid):
         title = request.POST['title']
         overview = request.POST['overview']
         genre = request.POST['genre']
+        duration = request.POST['duration']
 
         if len(overview) == 0 or len(genre) == 0 or len(title) == 0:
             messages.info(request, 'Please enter all field')
@@ -261,6 +263,7 @@ def editMovie(request, movieid):
             movie.overview=overview
             movie.genre=genre
             movie.title=title
+            movie.duration = duration
 
             movie.save()
             return redirect('/movie/dashboard')
