@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'theatre',
     'screen',
     'showtime',
+    'dashboard',
 ]
 
 MIDDLEWARE = [

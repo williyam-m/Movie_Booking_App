@@ -28,7 +28,8 @@ urlpatterns = [
     path('movie/', include('movie.urls')),
     path('theatre/', include('theatre.urls')),
     path('screen/', include('screen.urls')),
-    path('showtime/', include('showtime.urls'))
+    path('showtime/', include('showtime.urls')),
+    path('dashboard/', include('dashboard.urls'))
 ]
 
 urlpatterns = urlpatterns+static(settings.MEDIA_URL,
