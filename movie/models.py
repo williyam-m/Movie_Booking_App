@@ -17,6 +17,7 @@ class Movie(models.Model):
     genre = models.TextField()
     views = models.IntegerField(default=0)
     no_of_likes = models.IntegerField(default=0)
+    duration = models.IntegerField(default=120) # minutes
 
     def __str__(self):
         return self.user
