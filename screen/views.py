@@ -27,8 +27,10 @@ def create_screen(request):
         ticket_price = request.POST.get('ticket_price')
         rows = request.POST.get('rows')
         columns = request.POST.get('columns')
+
+        theatre = Theatre.objects.get(id = theatre_id)
         Screen.objects.create(
-            theatre_id=theatre_id,
+            theatre=theatre,
             name=name,
             ticket_price=ticket_price,
             rows=rows,
@@ -43,12 +45,15 @@ def update_screen(request, pk):
     screen = get_object_or_404(Screen, pk=pk)
     theatres = Theatre.objects.all()
     if request.method == "POST":
-        screen.theatre_id = request.POST.get('theatre_id')
+        theatre_id = request.POST.get('theatre_id')
+        theatre = Theatre.objects.get(id=theatre_id)
+        screen.theatre_id = theatre
         screen.name = request.POST.get('name')
         screen.ticket_price = request.POST.get('ticket_price')
         screen.save()
         return redirect('screen_dashboard')
     return render(request, 'update_screen.html', {'screen': screen, 'theatres': theatres})
+
 @login_required(login_url='signin')
 def view_screen(request, pk):
     screen = get_object_or_404(Screen, pk=pk)
