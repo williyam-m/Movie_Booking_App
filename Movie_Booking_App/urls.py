@@ -29,6 +29,7 @@ urlpatterns = [
     path('theatre/', include('theatre.urls')),
     path('screen/', include('screen.urls')),
     path('showtime/', include('showtime.urls')),
+    path('registration/', include('registration.urls')),
     path('dashboard/', include('dashboard.urls'))
 ]
 
