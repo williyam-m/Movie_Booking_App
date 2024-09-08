@@ -4,6 +4,36 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'css/showtime-style.css' %}">
     <title>Create Showtime</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function updateScreens(theatreId) {
+            $.ajax({
+                url: '/showtime/get_screens/' + theatreId + '/',
+                type: 'GET',
+                success: function(data) {
+                    var screenSelect = $('#screen');
+                    screenSelect.empty();
+                    data.forEach(function(screen) {
+                        screenSelect.append(new Option(screen.name, screen.id));
+                    });
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#theatre').change(function() {
+                var theatreId = $(this).val();
+                updateScreens(theatreId);
+            });
+
+            // Trigger screen update on page load if there is only one theatre
+            var theatreCount = $('#theatre option').length;
+            if (theatreCount === 2) { // including the placeholder option
+                var theatreId = $('#theatre').val();
+                updateScreens(theatreId);
+            }
+        });
+    </script>
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
 
@@ -18,11 +48,17 @@
                 {% endfor %}
             </select>
             <br>
+            <label for="theatre">Theatre:</label>
+            <select id="theatre" name="theatre" required>
+                <option value="" disabled selected>Select a theatre</option>
+                {% for theatre in theatres %}
+                    <option value="{{ theatre.id }}">{{ theatre.name }}</option>
+                {% endfor %}
+            </select>
+            <br>
             <label for="screen">Screen:</label>
             <select id="screen" name="screen" required>
-                {% for screen in screens %}
-                    <option value="{{ screen.id }}">{{ screen.name }}</option>
-                {% endfor %}
+                <option value="">Select a theatre first</option>
             </select>
             <br>
             <label for="start_date">Start Date:</label>
