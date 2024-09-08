@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Dashboard</h2>
+            <ul class="sidebar-links">
+                <li><a href="/movie/dashboard">Movies</a></li>
+                <li><a href="/theatre/dashboard/">Theatres</a></li>
+                <li><a href="/screen/dashboard/">Screens</a></li>
+                <li><a href="/showtime/dashboard/">Showtimes</a></li>
+                <li><a href="/user/dashboard/">Users</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="stats-grid">
+                <div class="stats-box">
+                    <p>{{ movies_count }}</p>
+                    <span>Movies</span>
+                </div>
+                <div class="stats-box">
+                    <p>{{ theatres_count }}</p>
+                    <span>Theatres</span>
+                </div>
+                <div class="stats-box">
+                    <p>{{ screens_count }}</p>
+                    <span>Screens</span>
+                </div>
+                <div class="stats-box">
+                    <p>{{ showtimes_count }}</p>
+                    <span>Showtimes</span>
+                </div>
+                <div class="stats-box">
+                    <p>{{ users_count }}</p>
+                    <span>Users</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
