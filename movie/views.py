@@ -49,6 +49,23 @@ def get_movie_recommendations(all_movies, liked_movies, suggestion_count=10):
 
     df_movies = pd.DataFrame(movies_data)
 
+    # Ensure non-empty components for each feature
+    min_component_length = 3  # Minimum length for each component to be considered non-empty
+
+    def is_valid_component(component):
+        return len(component) >= min_component_length
+
+    df_movies['valid_title'] = df_movies['title'].apply(is_valid_component)
+    df_movies['valid_overview'] = df_movies['overview'].apply(is_valid_component)
+    df_movies['valid_genre'] = df_movies['genre'].apply(is_valid_component)
+
+    df_movies = df_movies[df_movies['valid_title'] & df_movies['valid_overview'] & df_movies['valid_genre']]
+
+    if df_movies.empty:
+        print("No valid features to vectorize.")
+        return []
+
+
     # Combine the title, overview, and genre to create a single feature
     df_movies['features'] = df_movies['title'] + " " + df_movies['overview'] + " " + df_movies['genre']
 
@@ -275,15 +292,15 @@ def editMovie(request, movieid):
 def bookmark(request):
     if request.method == 'POST':
         movieid = request.POST['movieid']
-        if request.user.first_name != "":
-            if Bookmark.objects.filter(user_id = request.user.id, movie_id = movieid).first():
-                bookmark_object = Bookmark.objects.get(user_id = request.user.id, movie_id = movieid)
-                bookmark_object.delete()
-                return redirect('/movie/view/' + movieid)
-            else:
-                bookmark_object = Bookmark.objects.create(user_id = request.user.id, movie_id = movieid)
-                bookmark_object.save()
-                return redirect('/movie/view/' + movieid)
+
+        if Bookmark.objects.filter(user_id = request.user.id, movie_id = movieid).first():
+            bookmark_object = Bookmark.objects.get(user_id = request.user.id, movie_id = movieid)
+            bookmark_object.delete()
+            return redirect('/movie/view/' + movieid)
+        else:
+            bookmark_object = Bookmark.objects.create(user_id = request.user.id, movie_id = movieid)
+            bookmark_object.save()
+            return redirect('/movie/view/' + movieid)
         return redirect('/movie/view/' + movieid)
     return redirect('/')
 
