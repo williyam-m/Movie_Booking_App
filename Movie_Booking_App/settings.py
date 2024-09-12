@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'screen',
     'showtime',
     'dashboard',
-    'registration',
+    'booking',
 ]
 
 MIDDLEWARE = [
