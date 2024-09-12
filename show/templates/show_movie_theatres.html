@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/showtime-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/showlist-style.css' %}">
     <title>Showtimes for {{ movie.title }}</title>
     <style>
         body {
@@ -13,20 +13,52 @@
         .container {
             width: 80%;
             margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .filter-form {
+            margin-bottom: 20px;
         }
         .theatre {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         .showtime-list {
             display: flex;
-            flex-direction: row;
             flex-wrap: wrap;
+            gap: 10px;
         }
         .showtime-item {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            margin: 5px;
+            background: #222;
+            padding: 10px 15px;
             border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+            text-align: center;
+            width: 70px;
+            cursor: pointer;
+        }
+        .showtime-item:hover {
+            background: red;
+            transform: scale(1.05);
+        }
+        .showtime-link {
+            color: white;
+            text-decoration: none;
+        }
+        .showtime-link:hover {
+            text-decoration: none;
+        }
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .pagination .step-links a {
+            color: white;
+            margin: 0 5px;
+            text-decoration: none;
+        }
+        .pagination .step-links .current {
+            margin: 0 5px;
         }
     </style>
 </head>
@@ -34,33 +66,44 @@
 
 <div class="container">
     <h1>Showtimes for {{ movie.title }}</h1>
-    {% for showtime in page_obj %}
+
+    <form method="get" class="filter-form">
+        <label for="filter_date">Filter by date:</label>
+        <input type="date" id="filter_date" name="filter_date" value="{{ filter_date }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    {% for theatre in theatres %}
         <div class="theatre">
-            <h3>{{ showtime.theatre.name }}</h3>
+            <h3>{{ theatre.name }}</h3>
             <div class="showtime-list">
-                <div class="showtime-item">
-                    Screen: {{ showtime.screen.name }}<br>
-                    Start: {{ showtime.start_date }}<br>
-                    End: {{ showtime.end_date }}
-                </div>
+                {% for showtime in page_obj %}
+                    {% if showtime.theatre == theatre %}
+                        <a class="showtime-link" href="{% url 'view_showtime' showtime.id %}">
+                            <div class="showtime-item">
+                                {{ showtime.start_date|time:"H:i" }}
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     {% endfor %}
-    
+
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="?page=1{% if filter_date %}&filter_date={{ filter_date }}{% endif %}">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}{% if filter_date %}&filter_date={{ filter_date }}{% endif %}">previous</a>
             {% endif %}
-    
+
             <span class="current">
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
-    
+
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}{% if filter_date %}&filter_date={{ filter_date }}{% endif %}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{% if filter_date %}&filter_date={{ filter_date }}{% endif %}">last &raquo;</a>
             {% endif %}
         </span>
     </div>
