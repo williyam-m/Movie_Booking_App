@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Screen</title>
+    <link rel="stylesheet" href="{% static 'css/screen-book-style.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <div class="container">
+        <h4>Screen: {{ screen.name }}</h4>
+        <form method="post">
+            {% csrf_token %}
+            {% for row_label in row_labels %}
+                <div class="seat-row">
+                    <span class="row-label">{{ row_label }}</span>
+                    <div class="seat-row-grid">
+                        {% for column in columns_range %}
+                            {% with seat=row_label|stringformat:"s"|add:column|stringformat:"s" %}
+                                {% if seat in booked_seats %}
+                                    <div class="seat booked">{{ column }}</div>
+                                {% else %}
+                                    <div class="seat available">
+                                        <input type="checkbox" name="seats" value="{{ seat }}" id="{{ seat }}" class="seat-checkbox">
+                                        <label for="{{ seat }}" class="seat-label">{{ column }}</label>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="book-button">Book Selected Seats</button>
+        </form>
+    </div>
+    <script>
+        document.querySelectorAll('.seat.available .seat-label').forEach(label => {
+            label.addEventListener('click', function(event) {
+                event.preventDefault();
+                const checkbox = document.getElementById(this.htmlFor);
+                checkbox.checked = !checkbox.checked;
+                if (checkbox.checked) {
+                    this.style.backgroundColor = 'green';
+                    this.style.color = 'white';
+                } else {
+                    this.style.backgroundColor = 'white';
+                    this.style.color = 'black';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

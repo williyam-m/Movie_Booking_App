@@ -79,7 +79,7 @@
             <div class="showtime-list">
                 {% for showtime in page_obj %}
                     {% if showtime.theatre == theatre %}
-                        <a class="showtime-link" href="{% url 'view_showtime' showtime.id %}">
+                        <a class="showtime-link" href="/booking/showtime/{{showtime.id}}">
                             <div class="showtime-item">
                                 {{ showtime.start_date|time:"H:i" }}
                             </div>
