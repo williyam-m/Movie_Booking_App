@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/showtime-style.css' %}">
+    <title>Showtimes for {{ movie.title }}</title>
+    <style>
+        body {
+            background-image: url('{% static 'images/movie-image.jpg' %}');
+            color: white;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .theatre {
+            margin-bottom: 20px;
+        }
+        .showtime-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .showtime-item {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Showtimes for {{ movie.title }}</h1>
+    {% for showtime in page_obj %}
+        <div class="theatre">
+            <h3>{{ showtime.theatre.name }}</h3>
+            <div class="showtime-list">
+                <div class="showtime-item">
+                    Screen: {{ showtime.screen.name }}<br>
+                    Start: {{ showtime.start_date }}<br>
+                    End: {{ showtime.end_date }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+</body>
+</html>

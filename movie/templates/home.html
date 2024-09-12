@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="search-box">
-        <form action="/user/search" method="POST">
+        <form action="/movie/search" method="POST">
             {% csrf_token %}
             <input type="text" name="title" placeholder="Movie Name">
             <button type="submit">Search</button>

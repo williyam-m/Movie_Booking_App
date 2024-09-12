@@ -32,6 +32,7 @@
                 {% endif %}
             </small>
             <small><i class="fa fa-thumbs-up"></i> {{ movie.no_of_likes }} Likes</small>
+            <a href="/show/{{movie.id}}"><button>Book</button></a>
             <button onclick="document.getElementById('trailer-video').style.display='block'">Play Trailer</button>
             <video id="trailer-video" controls style="display:none;">
                 <source src="{{ movie.trailer_video.url }}" type="video/mp4">
