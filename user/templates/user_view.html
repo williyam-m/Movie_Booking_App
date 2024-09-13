@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'css/user-view.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <div class="container">
+        <h1>User Profile</h1>
+        <p><strong>Username:</strong> {{ profile.user.username }}</p>
+        <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone }}</p>
+        <p><strong>City:</strong> {{ profile.city }}</p>
+        <p><strong>Address:</strong> {{ profile.address }}</p>
+        <a href="{% url 'user_dashboard' %}" class="btn">Back to list</a>
+    </div>
+</body>
+</html>

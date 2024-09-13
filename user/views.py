@@ -31,6 +31,50 @@ def role_required(role):
 
 
 
+
+def user_dashboard(request):
+    profiles = UserProfile.objects.all()
+
+    return render(request, 'user_dashboard.html', {'profiles': profiles})
+
+
+def user_view(request, pk):
+    profile = get_object_or_404(UserProfile, pk=pk)
+    return render(request, 'user_view.html', {'profile': profile})
+
+
+def user_edit(request, pk):
+    profile = get_object_or_404(UserProfile, pk=pk)
+
+    if request.method == 'POST':
+
+        profile.phone = request.POST.get('phone')
+        profile.city = request.POST.get('city')
+        profile.address = request.POST.get('address')
+        profile.save()
+
+        return redirect('user_dashboard')
+
+    return render(request, 'user_edit.html', {'profile': profile})
+
+
+def user_delete(request, pk):
+    profile = get_object_or_404(UserProfile, pk=pk)
+
+    if request.method == 'POST':
+        user = profile.user
+        
+        profile.delete()
+        user.delete()
+    return redirect('user_dashboard')
+
+
+
+
+
+
+
+
 @role_required('Admin')
 def home(request):
     return HttpResponse("Hello, " + request.user.username)

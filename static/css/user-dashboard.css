@@ -1,0 +1,41 @@
+body {
+    background: #333;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+table th, table td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+table th {
+    background-color: #444;
+}
+
+table td {
+    background-color: #333;
+}
+.btn {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.btn:hover {
+    background-color: #c0392b;
+}
+
+form {
+    display: inline;
+}

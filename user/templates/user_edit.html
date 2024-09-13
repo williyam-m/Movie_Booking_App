@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Profile</title>
+    <link rel="stylesheet" href="{% static 'css/user-edit.css' %}">
+</head>
+<body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
+    <div class="container">
+        <h1>Edit User Profile</h1>
+        <p><strong>Username:</strong> {{ profile.user.username }}</p>
+        <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" value="{{ profile.phone }}" required><br>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ profile.city }}" required><br>
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required>{{ profile.address }}</textarea><br>
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+        <a href="{% url 'user_dashboard' %}" class="btn">Back to list</a>
+    </div>
+</body>
+</html>
