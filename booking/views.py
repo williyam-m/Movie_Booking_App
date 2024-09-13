@@ -6,6 +6,26 @@ from screen.models import Screen
 import string
 
 
+
+@login_required(login_url='signin')
+def booking_list(request):
+    bookings = Booking.objects.all()
+    return render(request, 'booking_list.html', {'bookings': bookings})
+
+@login_required(login_url='signin')
+def booking_detail(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
+    return render(request, 'booking_detail.html', {'booking': booking})
+
+@login_required(login_url='signin')
+def booking_delete(request, pk):
+    booking = get_object_or_404(Booking, pk=pk)
+
+    booking.delete()
+    return redirect('booking_list')
+
+
+
 @login_required(login_url='signin')
 def book_screen(request, pk):
     showtime = get_object_or_404(ShowTime, pk=pk)
