@@ -42,15 +42,18 @@ def book_screen(request, pk):
 
     if request.method == 'POST':
         selected_seats = request.POST.getlist('seats')
-        amount_paid = screen.ticket_price * len(selected_seats)
+        print(f"Selected seats: {selected_seats}")  # Debugging line to check selected seats
 
-        Booking.objects.create(
-            user=request.user,
-            showtime=showtime,
-            seats=selected_seats,
-            amount_paid=amount_paid
-        )
-        return redirect('booking_success')  # Define the URL name for booking confirmation
+        if selected_seats and '' not in selected_seats:  # Ensure no empty string in the list
+            amount_paid = screen.ticket_price * len(selected_seats)
+
+            Booking.objects.create(
+                user=request.user,
+                showtime=showtime,
+                seats=selected_seats,
+                amount_paid=amount_paid
+            )
+            return redirect('booking_success')  # Define the URL name for booking confirmation
 
     return render(request, 'book_screen.html', {
         'screen': screen,

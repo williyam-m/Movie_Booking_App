@@ -6,6 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Screen</title>
     <link rel="stylesheet" href="{% static 'css/screen-book-style.css' %}">
+    <style>
+        .seat {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .seat.available {
+            background-color: white;
+        }
+
+        .seat.booked {
+            background-color: red;
+            cursor: not-allowed;
+        }
+
+        .seat.selected {
+            background-color: green;
+        }
+
+        .seat input[type="checkbox"] {
+            display: none;
+        }
+    </style>
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
     <div class="container">
@@ -18,9 +47,11 @@
                     <div class="seat-row-grid">
                         {% for column in columns_range %}
                             {% with seat=row_label|stringformat:"s"|add:column|stringformat:"s" %}
-                                <div class="seat {% if seat in booked_seats %}booked{% else %}available{% endif %}" data-seat="{{ seat }}">
-                                    <input type="checkbox" name="seats" value="{{ seat }}" id="{{ seat }}" class="seat-checkbox" {% if seat in booked_seats %}disabled{% endif %}>
-                                    <label for="{{ seat }}" class="seat-label">{{ column }}</label>
+                                {% load booking_filters %}
+                                <div class="seat {% if row_label|concat:column in booked_seats %}booked{% else %}available{% endif %}" data-seat="{{ seat }}">
+                                    {% load booking_filters %}
+                                    <input type="checkbox" name="seats" value="{{ row_label }}{{ column }}" id="{{ row_label }}{{ column }}" class="seat-checkbox" {% if row_label|concat:column in booked_seats %}disabled{% endif %}>
+                                    <label for="{{ row_label }}{{ column }}" class="seat-label">{{ column }}</label>
                                 </div>
                             {% endwith %}
                         {% endfor %}
@@ -39,6 +70,17 @@
                 checkbox.checked = !checkbox.checked;
                 seatDiv.classList.toggle('selected', checkbox.checked);
             });
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const selectedSeats = [];
+            document.querySelectorAll('.seat-checkbox:checked').forEach(checkbox => {
+                selectedSeats.push(checkbox.value);
+            });
+            if (selectedSeats.length === 0) {
+                event.preventDefault();
+                alert('Please select at least one seat to book.');
+            }
         });
     </script>
 </body>
