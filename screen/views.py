@@ -3,6 +3,7 @@ from .models import Screen
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 import string
+from django.contrib import messages
 from theatre.models import *
 
 
@@ -27,6 +28,10 @@ def create_screen(request):
         ticket_price = request.POST.get('ticket_price')
         rows = request.POST.get('rows')
         columns = request.POST.get('columns')
+
+        if not 1 <= int(rows) <= 26:
+            messages.info(request, 'Rows must be between 1 to 26')
+            return render(request, 'create_screen.html', {'theatres': theatres})
 
         theatre = Theatre.objects.get(id = theatre_id)
         Screen.objects.create(

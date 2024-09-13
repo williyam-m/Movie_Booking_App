@@ -10,6 +10,9 @@
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
     <h4>Create Screen</h4>
+    {% if messages %}
+            <ul>{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
+        {% endif %}
     <form method="post" action="{% url 'create_screen' %}">
         {% csrf_token %}
         <div>
