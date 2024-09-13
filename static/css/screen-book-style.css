@@ -3,7 +3,6 @@ body {
     color: white;
     background-attachment: fixed;
 }
-
 .container {
     width: 80%;
     margin: 0 auto;
@@ -11,45 +10,18 @@ body {
     padding: 20px;
     border-radius: 10px;
 }
-
 .seat-row {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
-
 .seat-row-grid {
     display: flex;
     gap: 10px;
 }
-
-.seat {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.seat.available {
-    background: white;
-}
-
-.seat.booked {
-    background: red;
-}
-
-.seat.selected {
-    background: green;
-}
-
 input[type="checkbox"] {
     display: none;
 }
-
 .seat-label {
     display: block;
     width: 100%;
@@ -58,7 +30,6 @@ input[type="checkbox"] {
     line-height: 40px;
     color: black;
 }
-
 button[type="submit"] {
     background: red;
     color: white;
@@ -67,7 +38,33 @@ button[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
 }
-
 button[type="submit"]:hover {
     background: darkred;
 }
+.seat {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            text-align: center;
+            line-height: 30px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .seat.available {
+            background-color: white;
+        }
+
+        .seat.booked {
+            background-color: red;
+            cursor: not-allowed;
+        }
+
+        .seat.selected {
+            background-color: green;
+        }
+
+        .seat input[type="checkbox"] {
+            display: none;
+        }

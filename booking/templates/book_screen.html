@@ -6,35 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Screen</title>
     <link rel="stylesheet" href="{% static 'css/screen-book-style.css' %}">
-    <style>
-        .seat {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            margin: 5px;
-            text-align: center;
-            line-height: 30px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-
-        .seat.available {
-            background-color: white;
-        }
-
-        .seat.booked {
-            background-color: red;
-            cursor: not-allowed;
-        }
-
-        .seat.selected {
-            background-color: green;
-        }
-
-        .seat input[type="checkbox"] {
-            display: none;
-        }
-    </style>
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
     <div class="container">

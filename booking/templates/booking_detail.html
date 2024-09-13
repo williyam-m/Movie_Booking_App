@@ -5,18 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Detail</title>
-    <link rel="stylesheet" href="{% static 'css/book-dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/booking-detail.css' %}">
 </head>
 <body>
     <div class="container">
         <h1>Booking Detail</h1>
-        <p><strong>ID:</strong> {{ booking.id }}</p>
-        <p><strong>User:</strong> {{ booking.user.user.username }}</p>
-        <p><strong>Showtime:</strong> {{ booking.showtime }}</p>
+        <a href="/movie/view/{{booking.showtime.movie.id}}"><img src="{{ booking.showtime.movie.movie_image.url }}" alt=""/>
+        <p><strong>Movie:</strong> {{ booking.showtime.movie.title }}</p></a>
+
+        <p><strong>Showtime:</strong>{{ booking.showtime.start_date }} - {{ booking.showtime.end_date }} ({{ booking.showtime.movie.duration }} min)</p>
         <p><strong>Theatre:</strong> {{ booking.showtime.theatre.name }}</p>
+        <p><strong>Screen:</strong> {{ booking.showtime.screen.name }}</p>
         <p><strong>Seats:</strong> {{ booking.seats|join:", " }}</p>
         <p><strong>Amount Paid:</strong> {{ booking.amount_paid }}</p>
-        <p><strong>Booking Time:</strong> {{ booking.datetime }}</p>
+        <br>
+        <small><strong>User:</strong> {{ booking.user.username }}</small><br>
+        <small><strong>ID:</strong> {{ booking.id }}</small><br>
+        <small><strong>Booking Time:</strong> {{ booking.booking_datetime }}</small><br><br>
         <a href="{% url 'booking_list' %}">Back to list</a>
     </div>
 </body>
