@@ -5,6 +5,8 @@ from .models import ShowTime
 from movie.models import *
 from screen.models import *
 from theatre.models import *
+
+from django.contrib import messages
 from datetime import timedelta
 
 
@@ -23,16 +25,19 @@ def create_showtime(request):
         if ShowTime.objects.filter(screen=screen,
                                    start_date__lt=end_date,
                                    end_date__gt=datetime.fromisoformat(start_date)).exists():
-            return HttpResponse("Collision detected!", status=400)
 
-        ShowTime.objects.create(
-            movie=movie,
-            theatre = theatre,
-            screen=screen,
-            start_date=datetime.fromisoformat(start_date),
-            end_date=end_date
-        )
-        return redirect('showtime_list')
+            messages.info(request, 'ShowTime with this screen already exist')
+
+        else:
+
+            ShowTime.objects.create(
+                movie=movie,
+                theatre = theatre,
+                screen=screen,
+                start_date=datetime.fromisoformat(start_date),
+                end_date=end_date
+            )
+            return redirect('showtime_list')
 
     movies = Movie.objects.all()
     theatres = Theatre.objects.all()
@@ -66,15 +71,17 @@ def edit_showtime(request, pk):
         if ShowTime.objects.filter(screen=screen,
                                    start_date__lt=end_date,
                                    end_date__gt=datetime.fromisoformat(start_date)).exclude(pk=pk).exists():
-            return HttpResponse("Collision detected!", status=400)
+            messages.info(request, 'ShowTime with this screen already exist')
 
-        showtime.movie = movie
-        showtime.screen = screen
-        showtime.theatre = theatre
-        showtime.start_date = datetime.fromisoformat(start_date)
-        showtime.end_date = end_date
-        showtime.save()
-        return redirect('showtime_list')
+        else:
+
+            showtime.movie = movie
+            showtime.screen = screen
+            showtime.theatre = theatre
+            showtime.start_date = datetime.fromisoformat(start_date)
+            showtime.end_date = end_date
+            showtime.save()
+            return redirect('showtime_list')
 
     movies = Movie.objects.all()
     theatres = Theatre.objects.all()
@@ -85,7 +92,6 @@ def delete_showtime(request, pk):
     showtime = get_object_or_404(ShowTime, pk=pk)
     if request.method == 'POST':
         showtime.delete()
-        return redirect('showtime_list')
-    return render(request, 'delete_showtime.html', {'showtime': showtime})
 
+    return redirect('showtime_list')
 
