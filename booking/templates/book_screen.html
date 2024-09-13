@@ -18,14 +18,10 @@
                     <div class="seat-row-grid">
                         {% for column in columns_range %}
                             {% with seat=row_label|stringformat:"s"|add:column|stringformat:"s" %}
-                                {% if seat in booked_seats %}
-                                    <div class="seat booked">{{ column }}</div>
-                                {% else %}
-                                    <div class="seat available">
-                                        <input type="checkbox" name="seats" value="{{ seat }}" id="{{ seat }}" class="seat-checkbox">
-                                        <label for="{{ seat }}" class="seat-label">{{ column }}</label>
-                                    </div>
-                                {% endif %}
+                                <div class="seat {% if seat in booked_seats %}booked{% else %}available{% endif %}" data-seat="{{ seat }}">
+                                    <input type="checkbox" name="seats" value="{{ seat }}" id="{{ seat }}" class="seat-checkbox" {% if seat in booked_seats %}disabled{% endif %}>
+                                    <label for="{{ seat }}" class="seat-label">{{ column }}</label>
+                                </div>
                             {% endwith %}
                         {% endfor %}
                     </div>
@@ -38,15 +34,10 @@
         document.querySelectorAll('.seat.available .seat-label').forEach(label => {
             label.addEventListener('click', function(event) {
                 event.preventDefault();
-                const checkbox = document.getElementById(this.htmlFor);
+                const seatDiv = this.parentElement;
+                const checkbox = seatDiv.querySelector('.seat-checkbox');
                 checkbox.checked = !checkbox.checked;
-                if (checkbox.checked) {
-                    this.style.backgroundColor = 'green';
-                    this.style.color = 'white';
-                } else {
-                    this.style.backgroundColor = 'white';
-                    this.style.color = 'black';
-                }
+                seatDiv.classList.toggle('selected', checkbox.checked);
             });
         });
     </script>

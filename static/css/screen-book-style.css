@@ -31,16 +31,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    cursor: pointer;
 }
 
 .seat.available {
     background: white;
-    cursor: pointer;
 }
 
 .seat.booked {
     background: red;
+}
+
+.seat.selected {
+    background: green;
 }
 
 input[type="checkbox"] {
@@ -54,12 +57,6 @@ input[type="checkbox"] {
     text-align: center;
     line-height: 40px;
     color: black;
-    cursor: pointer;
-}
-
-input[type="checkbox"]:checked + .seat-label {
-    background: green;
-    color: white;
 }
 
 button[type="submit"] {
