@@ -89,6 +89,3 @@ def delete_showtime(request, pk):
     return render(request, 'delete_showtime.html', {'showtime': showtime})
 
 
-def view_showtime(request, pk):
-    showtime = get_object_or_404(ShowTime, pk=pk)
-    return render(request, 'view_showtime.html', {'showtime': showtime})

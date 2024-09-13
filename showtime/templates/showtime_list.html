@@ -30,7 +30,7 @@
                         <td>{{ showtime.start_date }}</td>
                         <td>{{ showtime.end_date }}</td>
                         <td>
-                            <a href="{% url 'view_showtime' showtime.id %}">View</a>
+
                             <a href="{% url 'edit_showtime' showtime.id %}">Edit</a>
                             <form action="{% url 'delete_showtime' showtime.id %}" method="post" style="display:inline;">
                                 {% csrf_token %}
