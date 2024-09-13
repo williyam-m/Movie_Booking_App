@@ -6,7 +6,6 @@
     <title>Showtime List</title>
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
-
     <div class="container">
         <h4>ShowTimes</h4>
         <a href="{% url 'create_showtime' %}">Create New Showtime</a>
@@ -30,7 +29,6 @@
                         <td>{{ showtime.start_date }}</td>
                         <td>{{ showtime.end_date }}</td>
                         <td>
-
                             <a href="{% url 'edit_showtime' showtime.id %}">Edit</a>
                             <form action="{% url 'delete_showtime' showtime.id %}" method="post" style="display:inline;">
                                 {% csrf_token %}
@@ -41,7 +39,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
 </body>
 </html>

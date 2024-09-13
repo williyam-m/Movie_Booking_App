@@ -12,13 +12,11 @@
         <h1>Booking Detail</h1>
         <a href="/movie/view/{{booking.showtime.movie.id}}"><img src="{{ booking.showtime.movie.movie_image.url }}" alt=""/>
         <p><strong>Movie:</strong> {{ booking.showtime.movie.title }}</p></a>
-
         <p><strong>Showtime:</strong>{{ booking.showtime.start_date }} - {{ booking.showtime.end_date }} ({{ booking.showtime.movie.duration }} min)</p>
         <p><strong>Theatre:</strong> {{ booking.showtime.theatre.name }}</p>
         <p><strong>Screen:</strong> {{ booking.showtime.screen.name }}</p>
         <p><strong>Seats:</strong> {{ booking.seats|join:", " }}</p>
-        <p><strong>Amount Paid:</strong> {{ booking.amount_paid }}</p>
-        <br>
+        <p><strong>Amount Paid:</strong> {{ booking.amount_paid }}</p><br>
         <small><strong>User:</strong> {{ booking.user.username }}</small><br>
         <small><strong>ID:</strong> {{ booking.id }}</small><br>
         <small><strong>Booking Time:</strong> {{ booking.booking_datetime }}</small><br><br>

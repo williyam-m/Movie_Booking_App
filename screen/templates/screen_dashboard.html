@@ -10,11 +10,9 @@
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
     <div class="container">
         <h4>Screen Dashboard</h4>
-
         <div class="add-screen">
             <a href="{% url 'create_screen' %}" class="btn btn-primary">Create New Screen</a>
         </div>
-
         <div class="screen-list">
             {% if screen_list %}
                 <table>

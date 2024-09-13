@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/theatre-style.css' %}">
 </head>
 <body style="background-image: url('{% static 'images/movie-image.jpg' %}'); color: white; background-attachment: fixed;">
-
     <h4>Update Theatre</h4>
     <form method="post" action="{% url 'update_theatre' theatre.id %}">
         {% csrf_token %}
