@@ -28,8 +28,8 @@
                     <td>{{ profile.get_role_display }}</td>
                     <td>{{ profile.email }}</td>
                     <td>{{ profile.phone }}</td>
-                    <td>{{ profile.city }}</td>
-                    <td>{{ profile.address }}</td>
+                    <td>{% if profile.city != None %}{{ profile.city }}{% endif %}</td>
+                    <td>{% if profile.address != None %}{{ profile.address }}{% endif %}</td>
                     <td>
                         <a href="{% url 'user_view' profile.id %}" class="btn">View</a>
                         <a href="{% url 'user_edit' profile.id %}" class="btn">Edit</a>

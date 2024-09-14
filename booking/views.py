@@ -14,6 +14,16 @@ def booking_list(request):
     bookings = Booking.objects.all()
     return render(request, 'booking_list.html', {'bookings': bookings})
 
+
+@login_required(login_url='signin')
+def user_booking_list(request):
+    user = request.user
+    bookings = Booking.objects.filter(user = user)
+    return render(request, 'booking_list.html', {'bookings': bookings})
+
+
+
+
 @login_required(login_url='signin')
 def booking_detail(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
@@ -24,7 +34,7 @@ def booking_delete(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
 
     booking.delete()
-    return redirect('booking_list')
+    return redirect('/')
 
 
 
