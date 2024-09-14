@@ -63,7 +63,7 @@ def user_delete(request, pk):
 
     if request.method == 'POST':
         user = profile.user
-        
+
         profile.delete()
         user.delete()
     return redirect('user_dashboard')

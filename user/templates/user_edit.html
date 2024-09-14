@@ -23,7 +23,7 @@
             <textarea id="address" name="address" rows="4" required>{{ profile.address }}</textarea><br>
             <button type="submit" class="btn">Save Changes</button>
         </form>
-        <a href="{% url 'user_dashboard' %}" class="btn">Back to list</a>
+        <a href="{% url 'user_view' profile.id %}" class="btn">View</a>
     </div>
 </body>
 </html>

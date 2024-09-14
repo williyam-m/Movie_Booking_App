@@ -16,7 +16,7 @@
         <p><strong>Phone:</strong> {{ profile.phone }}</p>
         <p><strong>City:</strong> {{ profile.city }}</p>
         <p><strong>Address:</strong> {{ profile.address }}</p>
-        <a href="{% url 'user_dashboard' %}" class="btn">Back to list</a>
+        <a href="{% url 'user_edit' profile.id %}" class="btn">Edit</a>
     </div>
 </body>
 </html>

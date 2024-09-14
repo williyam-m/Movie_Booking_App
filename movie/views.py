@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
+from user.models import UserProfile
 from django.core.paginator import Paginator
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -95,6 +97,7 @@ def get_movie_recommendations(all_movies, liked_movies, suggestion_count=10):
 @login_required(login_url='signin')
 def home(request):
     user = request.user
+    profile = UserProfile.objects.get(user = user)
 
     historys = History.objects.filter(user_id=user.id)
     bookmarks = Bookmark.objects.filter(user_id=user.id)
@@ -111,7 +114,7 @@ def home(request):
         user_interested_movies.append(Movie.objects.get(id=bookmark.movie_id))
 
     recommended_movies = None
-    print(len(user_interested_movies))
+
 
     if len(user_interested_movies) > 1:
         recommended_movie_ids = get_movie_recommendations(all_movies, user_interested_movies, suggestion_count=min(len(user_interested_movies) - 1, 10))
@@ -129,6 +132,7 @@ def home(request):
         'movie_list': all_movies,
         'recommended_movies': recommended_movies,
         'last_seen_movie': last_seen_movie,
+        'profile' : profile
     })
 
 @login_required(login_url='signin')
