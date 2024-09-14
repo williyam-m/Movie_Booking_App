@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from user.views import role_required
 from .models import Booking
 from showtime.models import ShowTime
 from screen.models import Screen
@@ -8,6 +9,7 @@ import string
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def booking_list(request):
     bookings = Booking.objects.all()
     return render(request, 'booking_list.html', {'bookings': bookings})

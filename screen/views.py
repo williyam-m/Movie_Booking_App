@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Screen
 from django.contrib.auth.decorators import login_required
+from user.views import role_required
 from django.views.decorators.http import require_http_methods
 import string
 from django.contrib import messages
@@ -8,17 +9,20 @@ from theatre.models import *
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def register(request):
     screen_list = Screen.objects.all()
     return render(request, 'screen_dashboard.html', {'screen_list': screen_list})
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def screen_dashboard(request):
     screen_list = Screen.objects.all()
     return render(request, 'screen_dashboard.html', {'screen_list': screen_list})
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 @require_http_methods(["GET", "POST"])
 def create_screen(request):
     theatres = Theatre.objects.all()
@@ -45,6 +49,7 @@ def create_screen(request):
     return render(request, 'create_screen.html', {'theatres': theatres})
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 @require_http_methods(["GET", "POST"])
 def update_screen(request, pk):
     screen = get_object_or_404(Screen, pk=pk)
@@ -75,6 +80,7 @@ def view_screen(request, pk):
         'row_labels': row_labels,
     })
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def delete_screen(request, pk):
     screen = get_object_or_404(Screen, pk=pk)
     screen.delete()

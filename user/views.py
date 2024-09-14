@@ -21,7 +21,7 @@ def role_required(role):
             user_profile = get_object_or_404(UserProfile, user=request.user)
 
             # Check if the user's role matches the required role
-            if user_profile.role == role:
+            if user_profile.role in role:
                 return view_func(request, *args, **kwargs)
 
             return HttpResponseForbidden(f"Access Denied: You do not have permission to view this page. This section is restricted to {role} only")
@@ -32,17 +32,22 @@ def role_required(role):
 
 
 
+@login_required(login_url='signin')
+@role_required(['SuperAdmin'])
 def user_dashboard(request):
     profiles = UserProfile.objects.all()
 
     return render(request, 'user_dashboard.html', {'profiles': profiles})
 
 
+@login_required(login_url='signin')
 def user_view(request, pk):
     profile = get_object_or_404(UserProfile, pk=pk)
     return render(request, 'user_view.html', {'profile': profile})
 
 
+
+@login_required(login_url='signin')
 def user_edit(request, pk):
     profile = get_object_or_404(UserProfile, pk=pk)
 
@@ -58,6 +63,9 @@ def user_edit(request, pk):
     return render(request, 'user_edit.html', {'profile': profile})
 
 
+
+@login_required(login_url='signin')
+@role_required(['SuperAdmin'])
 def user_delete(request, pk):
     profile = get_object_or_404(UserProfile, pk=pk)
 
@@ -74,8 +82,8 @@ def user_delete(request, pk):
 
 
 
-
-@role_required('Admin')
+@login_required(login_url='signin')
+@role_required(['SuperAdmin'])
 def home(request):
     return HttpResponse("Hello, " + request.user.username)
 

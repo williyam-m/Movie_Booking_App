@@ -9,7 +9,13 @@ from theatre.models import *
 from django.contrib import messages
 from datetime import timedelta
 
+from django.contrib.auth.decorators import login_required
+from user.views import role_required
 
+
+
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def create_showtime(request):
     if request.method == 'POST':
         movie_id = request.POST.get('movie')
@@ -50,11 +56,15 @@ def get_screens_by_theatre(request, theatre_id):
     return JsonResponse(screens_list, safe=False)
 
 
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def showtime_list(request):
     showtimes = ShowTime.objects.all()
     return render(request, 'showtime_list.html', {'showtimes': showtimes})
 
 
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def edit_showtime(request, pk):
     showtime = get_object_or_404(ShowTime, pk=pk)
     if request.method == 'POST':
@@ -88,6 +98,8 @@ def edit_showtime(request, pk):
     return render(request, 'edit_showtime.html', {'showtime': showtime, 'movies': movies, 'theatres': theatres})
 
 
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def delete_showtime(request, pk):
     showtime = get_object_or_404(ShowTime, pk=pk)
     if request.method == 'POST':

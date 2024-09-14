@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from user.views import role_required
 from .models import *
 from user.models import UserProfile
 from django.core.paginator import Paginator
@@ -14,7 +15,8 @@ import os
 
 # Create your views here.
 
-@login_required(login_url = 'signin')
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def dashboard(request):
     user = User.objects.get(username = request.user.username)
 
@@ -205,6 +207,7 @@ def movie(request, movieid):
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def addMovie(request):
     if request.method == 'POST':
         movie_image_flag = False
@@ -243,6 +246,7 @@ def addMovie(request):
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def deleteMovie(request, movieid):
     movie = Movie.objects.get(id=movieid)
 
@@ -264,6 +268,7 @@ def deleteMovie(request, movieid):
 
 
 @login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def editMovie(request, movieid):
     movie = Movie.objects.get(id=movieid)
 

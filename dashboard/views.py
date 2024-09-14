@@ -6,6 +6,13 @@ from screen.models import Screen
 from showtime.models import ShowTime
 from user.models import User
 
+from django.contrib.auth.decorators import login_required
+from user.views import role_required
+
+
+
+@login_required(login_url='signin')
+@role_required(['SuperAdmin', 'Admin'])
 def dashboard(request):
     context = {
         'movies_count': Movie.objects.count(),

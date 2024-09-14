@@ -5,7 +5,11 @@ from movie.models import Movie
 from showtime.models import ShowTime
 from theatre.models import Theatre
 
+from django.contrib.auth.decorators import login_required
+from user.views import role_required
 
+
+@login_required(login_url='signin')
 def show_movie_theatres(request, movieid):
     movie = get_object_or_404(Movie, id=movieid)
     filter_date = request.GET.get('filter_date')
