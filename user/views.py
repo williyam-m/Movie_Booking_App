@@ -24,7 +24,9 @@ def role_required(role):
             if user_profile.role in role:
                 return view_func(request, *args, **kwargs)
 
-            return HttpResponseForbidden(f"Access Denied: You do not have permission to view this page. This section is restricted to {role} only")
+            role_str = ' / '.join(role)
+
+            return render(request, 'access.html', {'message' : f"Access Denied: You do not have permission to view this page. This section is restricted to {role_str} only"})
         return _wrapped_view
     return decorator
 

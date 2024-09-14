@@ -14,8 +14,8 @@
         <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
         <p><strong>Email:</strong> {{ profile.email }}</p>
         <p><strong>Phone:</strong> {{ profile.phone }}</p>
-        <p><strong>City:</strong> {{ profile.city }}</p>
-        <p><strong>Address:</strong> {{ profile.address }}</p>
+        <p><strong>City:</strong> {% if profile.city != None %}{{ profile.city }}{% endif %}</p>
+        <p><strong>Address:</strong> {% if profile.address != None %}{{ profile.address }}{% endif %}</p>
         <a href="{% url 'user_edit' profile.id %}" class="btn">Edit</a>
     </div>
 </body>

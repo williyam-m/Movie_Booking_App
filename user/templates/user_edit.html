@@ -18,9 +18,9 @@
             <label for="phone">Phone:</label>
             <input type="text" id="phone" name="phone" value="{{ profile.phone }}" required><br>
             <label for="city">City:</label>
-            <input type="text" id="city" name="city" value="{{ profile.city }}" required><br>
+            <input type="text" id="city" name="city" value="{% if profile.city != None %}{{ profile.city }}{% endif %}" required><br>
             <label for="address">Address:</label>
-            <textarea id="address" name="address" rows="4" required>{{ profile.address }}</textarea><br>
+            <textarea id="address" name="address" rows="4" required>{% if profile.address != None %}{{ profile.address }}{% endif %}</textarea><br>
             <button type="submit" class="btn">Save Changes</button>
         </form>
         <a href="{% url 'user_view' profile.id %}" class="btn">View</a>
